@@ -66,18 +66,14 @@ class _SetGoalModalButtomSheetState extends State<SetGoalModalButtomSheet> {
                 backgroundColor: Colors.white,
                 itemExtent: 30,
                 scrollController: FixedExtentScrollController(initialItem: 1),
-                children: [
-                  Text('1 l'),
-                  Text('2 l'),
-                  Text('3 l'),
-                  Text('4 l'),
-                  Text('5 l'),
-                  Text('6 l'),
-                  Text('7 l'),
-                  Text('8 l'),
-                  Text('9 l'),
-                  Text('10 l'),
-                ],
+                children: List.generate(
+                  10,
+                  (index) {
+                    return LittleTextWidget(
+                      text: (index + 1).toString(),
+                    );
+                  },
+                ),
                 onSelectedItemChanged: (value) {
                   _selectedLitre = value;
                 },
@@ -111,6 +107,28 @@ class _SetGoalModalButtomSheetState extends State<SetGoalModalButtomSheet> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class LittleTextWidget extends StatelessWidget {
+  final String text;
+  const LittleTextWidget({
+    Key key,
+    @required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '$text l',
+      style: GoogleFonts.nunito(
+        textStyle: TextStyle(
+          fontSize: 24,
+          color: Color(0xff232326),
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
