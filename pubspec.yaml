@@ -28,6 +28,7 @@ dependencies:
   gap: ^1.2.0
   get_it: ^4.0.1
   google_fonts: ^2.1.0
+  logger: ^1.0.0
   percent_indicator: ^2.1.7+2
   provider: ^4.3.2+2
 

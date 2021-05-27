@@ -1,37 +1,46 @@
-import 'dart:math';
-
-import 'package:sqin/constant/routes.dart';
-import 'package:sqin/locator.dart';
+import 'package:logger/logger.dart';
+import 'package:meta/meta.dart';
 import 'package:sqin/services/navigation_service.dart';
 import 'package:sqin/viewmodels/base_model.dart';
 
 class HomeViewModel extends BaseModel {
-  final NavigationService _navigationService = sl<NavigationService>();
-  List _list = [100, 4, 7, 10, 20, 20];
-  List get list => _list;
-  int _overAllPoint = 0;
-  int get overAllPoint => _overAllPoint;
-  int _recentPoint = 0;
-  int get recentAllPoint => _recentPoint;
-  int generateNumber() {
-    Random rnd = new Random();
+  final NavigationService navigationService;
+  HomeViewModel({
+    @required this.navigationService,
+  });
 
-    var value = rnd.nextInt(5 - 0);
-    print(value);
-    return value;
+  double selectedDailyGoal = 0;
+  double achieveGoal = 0;
+  int percentageAchieve = 0;
+
+  void setDailyGoal(int goal) {
+    Logger().i(goal);
+    selectedDailyGoal = goal.toDouble();
+    achieveGoal = 0;
+    percentageAchieve = 0;
+    notifyListeners();
+    navigationService.pop();
   }
 
-  void addPoint(value) {
-    int newValue = value + _overAllPoint;
-    if (value == 100) {
-      _overAllPoint = 100;
-    } else if (newValue < 100) {
-      _overAllPoint = newValue;
-    } else {
-      _overAllPoint = 100;
+  void increaseAchiveGoal() {
+    if (achieveGoal < selectedDailyGoal) {
+      achieveGoal++;
     }
-    _recentPoint = value;
+    double percent =
+        ((selectedDailyGoal - achieveGoal) / selectedDailyGoal) * 100;
+    Logger().i(100 - percent);
+    percentageAchieve = (100 - percent).toInt();
+    notifyListeners();
+  }
 
-    _navigationService.clearLastAndNavigateTo(Routes.detailsView);
+  void decieveAchiveGoal() {
+    if (achieveGoal != 0.0) {
+      achieveGoal--;
+    }
+    double percent =
+        ((selectedDailyGoal - achieveGoal) / selectedDailyGoal) * 100;
+    Logger().i(100 - percent);
+    percentageAchieve = (100 - percent).toInt();
+    notifyListeners();
   }
 }

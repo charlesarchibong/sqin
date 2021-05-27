@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -5,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sqin/constant/app_assets.dart';
 import 'package:sqin/touchables/touchable_opacity.dart';
 import 'package:sqin/ui/shared/base_view.dart';
+import 'package:sqin/ui/widgets/set_daily_goal_bottomsheet.dart';
 import 'package:sqin/viewmodels/home_view_model.dart';
 
 class HomePageView extends StatelessWidget {
@@ -69,7 +71,7 @@ class HomePageView extends StatelessWidget {
                         ),
                         Gap(5),
                         Text(
-                          '50%',
+                          '${model.percentageAchieve}%',
                           style: GoogleFonts.nunitoSans(
                             textStyle: TextStyle(
                               fontSize: 60,
@@ -78,7 +80,7 @@ class HomePageView extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '1.0l / 2.0l',
+                          '${model.achieveGoal.toString()}l / ${model.selectedDailyGoal}l',
                           style: GoogleFonts.nunitoSans(
                             textStyle: TextStyle(
                               fontSize: 30,
@@ -88,20 +90,35 @@ class HomePageView extends StatelessWidget {
                           ),
                         ),
                         Gap(30),
-                        Container(
-                          width: 150,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Color(0xffEAF1F4),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Daily goal',
-                              style: GoogleFonts.nunitoSans(
-                                textStyle: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
+                        TouchableOpacity(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: Color(0xffE5E5E5),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                ),
+                              ),
+                              builder: (context) => SetGoalModalButtomSheet(),
+                            );
+                          },
+                          child: Container(
+                            width: 150,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              color: Color(0xffEAF1F4),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Daily goal',
+                                style: GoogleFonts.nunitoSans(
+                                  textStyle: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),
@@ -112,10 +129,17 @@ class HomePageView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ActionButtonWidget(),
+                            ActionButtonWidget(
+                              onTap: () {
+                                model.increaseAchiveGoal();
+                              },
+                            ),
                             Gap(50),
                             ActionButtonWidget(
                               isAddAction: false,
+                              onTap: () {
+                                model.decieveAchiveGoal();
+                              },
                             ),
                           ],
                         )

@@ -9,5 +9,9 @@ Future<void> setupsl() async {
 
   /******************* view models *************************/
 
-  sl.registerLazySingleton(() => HomeViewModel());
+  sl.registerLazySingleton(
+    () => HomeViewModel(
+      navigationService: sl(),
+    ),
+  );
 }
