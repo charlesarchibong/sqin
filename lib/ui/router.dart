@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sqin/constant/routes.dart';
 import 'package:sqin/ui/views/homepage.dart';
 
-import 'shared/style/fonts.dart';
-
 /// Generate routes for navigation
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -17,7 +15,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => Scaffold(
           body: Center(
-            child: AgBodyText('No route defined for ${settings.name}'),
+            child: Text('No route defined for ${settings.name}'),
           ),
         ),
       );

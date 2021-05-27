@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sqin/constant/routes.dart';
@@ -9,12 +8,8 @@ import 'package:sqin/ui/shared/style/colors.dart';
 
 import 'locator.dart';
 import 'services/navigation_service.dart';
-import 'ui/shared/logger.dart';
 
 void main() async {
-  /// Only in debug mode
-  Log.init(kReleaseMode);
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await setupsl();
